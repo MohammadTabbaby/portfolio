@@ -1,0 +1,30 @@
+<div class="projects-page">
+  <div class="page-header">
+    <h1>My Projects</h1>
+    <p>A collection of my professional work and personal projects</p>
+  </div>
+
+  <div class="projects-container">
+    <ng-container *ngIf="projects$ | async as projects">
+      <div *ngIf="projects.length === 0" class="no-projects">
+        <p>No projects available yet. Check back soon!</p>
+      </div>
+
+      <div *ngFor="let p of projects" class="project-card">
+        <div class="project-header">
+          <h3>{{p.title}}</h3>
+        </div>
+        
+        <div class="project-body">
+          <p class="project-description">{{p.description}}</p>
+        </div>
+
+        <div class="project-footer">
+          <a *ngIf="p.githubUrl" [href]="p.githubUrl" target="_blank" rel="noopener noreferrer" class="btn-link">
+            <span>→ View Repository</span>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

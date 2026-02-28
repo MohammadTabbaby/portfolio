@@ -1,0 +1,89 @@
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <h1>Project Management Dashboard</h1>
+    <p>Manage your portfolio projects</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Create Project Section -->
+    <div class="dashboard-section">
+      <h2>Add New Project</h2>
+
+      <div *ngIf="error" class="alert alert-error">
+        {{error}}
+      </div>
+
+      <form (ngSubmit)="create()" class="project-form">
+        <div class="form-group">
+          <label for="title">Project Title *</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            [(ngModel)]="model.title"
+            placeholder="Enter project title"
+            required
+            [disabled]="loading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="model.description"
+            placeholder="Describe your project"
+            rows="4"
+            [disabled]="loading"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="githubUrl">GitHub URL</label>
+          <input
+            type="url"
+            id="githubUrl"
+            name="githubUrl"
+            [(ngModel)]="model.githubUrl"
+            placeholder="https://github.com/..."
+            [disabled]="loading"
+          />
+        </div>
+
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          {{loading ? 'Creating...' : 'Create Project'}}
+        </button>
+      </form>
+    </div>
+
+    <!-- Projects List Section -->
+    <div class="dashboard-section">
+      <h2>Your Projects</h2>
+
+      <div *ngIf="projects.length === 0" class="no-projects">
+        <p>No projects yet. Create one to get started!</p>
+      </div>
+
+      <div *ngIf="projects.length > 0" class="projects-container">
+        <div *ngFor="let p of projects" class="project-item">
+          <div class="project-info">
+            <h3>{{p.title}}</h3>
+            <p class="project-description">{{p.description}}</p>
+            <div *ngIf="p.githubUrl" class="project-link">
+              <a [href]="p.githubUrl" target="_blank" rel="noopener noreferrer">
+                View Repository →
+              </a>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button (click)="deleteProject(p.id)" class="btn-danger" title="Delete project">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
